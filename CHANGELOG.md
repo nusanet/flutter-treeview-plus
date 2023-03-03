@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Fix path gif screenshot in README.md.
+
 ## 1.0.2
 
 * Added gif of example in README.md.
