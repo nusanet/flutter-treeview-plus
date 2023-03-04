@@ -30,6 +30,7 @@ class FlutterTreeviewPlus extends StatefulWidget {
   final void Function(bool? checked, TreeNodeData node)? onCheck;
   final void Function(TreeNodeData node, TreeNodeData parent)? onAppend;
   final void Function(TreeNodeData node, TreeNodeData parent)? onRemove;
+  final void Function(List<TreeNodeData> listTreeNode)? onChange;
 
   final TreeNodeData Function(TreeNodeData parent)? append;
   final Future<List<TreeNodeData>> Function(TreeNodeData parent)? load;
@@ -44,6 +45,7 @@ class FlutterTreeviewPlus extends StatefulWidget {
     this.onCollapse,
     this.onAppend,
     this.onRemove,
+    this.onChange,
     this.append,
     this.load,
     this.lazy = false,
@@ -145,55 +147,62 @@ class _FlutterTreeviewPlusState extends State<FlutterTreeviewPlus> {
   Widget build(BuildContext context) {
     return BlocProvider<TreeviewBloc>(
       create: (_) => treeviewBloc,
-      child: BlocBuilder<TreeviewBloc, TreeviewState>(
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                if (widget.showFilter)
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 18.0,
-                      right: 18.0,
-                      bottom: 12.0,
-                    ),
-                    child: TextField(
-                        onChanged: _onChange,
-                        decoration: InputDecoration(
-                          labelText: widget.filterPlaceholder,
-                        )),
-                  ),
-                ...List.generate(
-                  _renderList.length,
-                  (int index) {
-                    return TreeNode(
-                      load: load,
-                      remove: remove,
-                      append: append,
-                      parent: _root,
-                      parentState: widget.manageParentState ? this : null,
-                      data: _renderList[index],
-                      icon: widget.icon,
-                      lazy: widget.lazy,
-                      offsetLeft: widget.offsetLeft,
-                      maxLines: widget.maxLines,
-                      showCheckBox: widget.showCheckBox,
-                      showActions: widget.showActions,
-                      contentTappable: widget.contentTappable,
-                      onTap: widget.onTap ?? (n) {},
-                      onLoad: widget.onLoad ?? (n) {},
-                      onCheck: widget.onCheck ?? (b, n) {},
-                      onExpand: widget.onExpand ?? (n) {},
-                      onRemove: widget.onRemove ?? (n, p) {},
-                      onAppend: widget.onAppend ?? (n, p) {},
-                      onCollapse: widget.onCollapse ?? (n) {},
-                    );
-                  },
-                )
-              ],
-            ),
-          );
+      child: BlocListener<TreeviewBloc, TreeviewState>(
+        listener: (context, state) {
+          if (widget.onChange != null) {
+            widget.onChange!.call(_renderList);
+          }
         },
+        child: BlocBuilder<TreeviewBloc, TreeviewState>(
+          builder: (context, state) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (widget.showFilter)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 18.0,
+                        right: 18.0,
+                        bottom: 12.0,
+                      ),
+                      child: TextField(
+                          onChanged: _onChange,
+                          decoration: InputDecoration(
+                            labelText: widget.filterPlaceholder,
+                          )),
+                    ),
+                  ...List.generate(
+                    _renderList.length,
+                        (int index) {
+                      return TreeNode(
+                        load: load,
+                        remove: remove,
+                        append: append,
+                        parent: _root,
+                        parentState: widget.manageParentState ? this : null,
+                        data: _renderList[index],
+                        icon: widget.icon,
+                        lazy: widget.lazy,
+                        offsetLeft: widget.offsetLeft,
+                        maxLines: widget.maxLines,
+                        showCheckBox: widget.showCheckBox,
+                        showActions: widget.showActions,
+                        contentTappable: widget.contentTappable,
+                        onTap: widget.onTap ?? (n) {},
+                        onLoad: widget.onLoad ?? (n) {},
+                        onCheck: widget.onCheck ?? (b, n) {},
+                        onExpand: widget.onExpand ?? (n) {},
+                        onRemove: widget.onRemove ?? (n, p) {},
+                        onAppend: widget.onAppend ?? (n, p) {},
+                        onCollapse: widget.onCollapse ?? (n) {},
+                      );
+                    },
+                  )
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
