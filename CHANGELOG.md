@@ -1,3 +1,7 @@
+## 1.1.0
+
+* Added parameter `onChange`. This is a parameter function for callback while state checkbox has been changed. This function have a parameter `listTreeNode`. `listTreeNode` is all of tree node that has been changed.
+
 ## 1.0.3
 
 * Fix path gif screenshot in README.md.
