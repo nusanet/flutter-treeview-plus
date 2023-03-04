@@ -34,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final treeData = <TreeNodeData>[];
+  final selectedOrganizationChart = <ItemOrganizationChart>{};
 
   @override
   void initState() {
@@ -52,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
           (index) => mapOrganizationChartToTreeNodeData(data[index], null),
         ),
       );
-      debugPrint('treeData: $treeData');
       setState(() {});
     });
     super.initState();
@@ -66,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       checked: itemOrganizationChart.isChecked,
       children: [],
       parent: parent,
+      extra: itemOrganizationChart,
     );
     final nestedChildren = children.isEmpty
         ? <TreeNodeData>[]
@@ -88,8 +89,33 @@ class _MyHomePageState extends State<MyHomePage> {
               data: treeData,
               showCheckBox: true,
               manageParentState: true,
+              onChange: (List<TreeNodeData> listTreeNode) {
+                selectedOrganizationChart.clear();
+                for (final treeNode in listTreeNode) {
+                  handleOnChange(treeNode);
+                }
+                /*final listSelectedNames = selectedOrganizationChart.map((e) => e.name ?? '-');
+                debugPrint('list selected names: $listSelectedNames');*/
+              },
             ),
     );
+  }
+
+  void handleOnChange(TreeNodeData treeNode) {
+    final isChecked = treeNode.checked;
+    final data = treeNode.extra as ItemOrganizationChart;
+    if (isChecked == null) {
+      // Check the children
+      final children = treeNode.children;
+      if (children.isNotEmpty) {
+        for (final child in children) {
+          handleOnChange(child);
+        }
+      }
+    } else if (isChecked) {
+      // Added to list selected
+      selectedOrganizationChart.add(data);
+    }
   }
 }
 
