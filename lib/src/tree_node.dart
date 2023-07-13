@@ -60,7 +60,8 @@ class TreeNode extends StatefulWidget {
   State<TreeNode> createState() => _TreeNodeState();
 }
 
-class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin {
+class _TreeNodeState extends State<TreeNode>
+    with SingleTickerProviderStateMixin {
   bool _isExpanded = false;
   bool? _isChecked = false;
   bool _showLoading = false;
@@ -118,7 +119,8 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     if (widget.parentState != null) _isChecked = widget.data.checked;
 
-    bool hasData = widget.data.children.isNotEmpty || (widget.lazy && !_isExpanded);
+    bool hasData =
+        widget.data.children.isNotEmpty || (widget.lazy && !_isExpanded);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +128,9 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
         InkWell(
           splashColor: widget.contentTappable ? null : Colors.transparent,
           highlightColor: widget.contentTappable ? null : Colors.transparent,
-          mouseCursor: widget.contentTappable ? SystemMouseCursors.click : MouseCursor.defer,
+          mouseCursor: widget.contentTappable
+              ? SystemMouseCursors.click
+              : MouseCursor.defer,
           onTap: widget.contentTappable
               ? () {
                   if (hasData) {
@@ -175,7 +179,8 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
                       if (widget.parentState != null) {
                         _checkUncheckChildren(widget.data.children);
                         _checkUncheckParent(widget.parent);
-                        BlocProvider.of<TreeviewBloc>(context).add(UpdateTreeviewEvent());
+                        BlocProvider.of<TreeviewBloc>(context)
+                            .add(UpdateTreeviewEvent());
                       }
                       widget.onCheck(_isChecked, widget.data);
                       setState(() {});
@@ -223,9 +228,11 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
                       widget.remove(widget.data);
                       widget.onRemove(widget.data, widget.parent);
                     },
-                    child: const Text('Remove', style: TextStyle(fontSize: 12.0)),
+                    child:
+                        const Text('Remove', style: TextStyle(fontSize: 12.0)),
                   ),
-                if (widget.data.customActions?.isNotEmpty == true) ...widget.data.customActions!,
+                if (widget.data.customActions?.isNotEmpty == true)
+                  ...widget.data.customActions!,
               ],
             ),
           ),

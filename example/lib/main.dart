@@ -39,7 +39,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final strOrganizationChart = await rootBundle.loadString('assets/organization_chart.json');
+      final strOrganizationChart =
+          await rootBundle.loadString('assets/organization_chart.json');
       final organizationChartJson = json.decode(strOrganizationChart);
       final organizationChart = OrganizationChart(
         data: (organizationChartJson['data'] as List<dynamic>?)?.map((e) {
@@ -58,7 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  TreeNodeData mapOrganizationChartToTreeNodeData(ItemOrganizationChart itemOrganizationChart, TreeNodeData? parent) {
+  TreeNodeData mapOrganizationChartToTreeNodeData(
+      ItemOrganizationChart itemOrganizationChart, TreeNodeData? parent) {
     final children = itemOrganizationChart.children ?? [];
     final treeNodeData = TreeNodeData(
       title: itemOrganizationChart.name ?? '-',
@@ -70,7 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     final nestedChildren = children.isEmpty
         ? <TreeNodeData>[]
-        : children.map((e) => mapOrganizationChartToTreeNodeData(e, treeNodeData)).toList();
+        : children
+            .map((e) => mapOrganizationChartToTreeNodeData(e, treeNodeData))
+            .toList();
     treeNodeData.children = nestedChildren;
     return treeNodeData;
   }
@@ -153,7 +157,8 @@ class ItemOrganizationChart {
       pid: json['id'],
       name: json['name'],
       children: (json['children'] as List<dynamic>?)
-          ?.map((e) => ItemOrganizationChart.fromJson(e as Map<String, dynamic>))
+          ?.map(
+              (e) => ItemOrganizationChart.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }

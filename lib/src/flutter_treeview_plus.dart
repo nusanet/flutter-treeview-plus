@@ -79,7 +79,8 @@ class _FlutterTreeviewPlusState extends State<FlutterTreeviewPlus> {
         tempNode.children = _filter(val, tempNode.children);
       }
 
-      if (tempNode.title.contains(RegExp(val, caseSensitive: false)) || tempNode.children.isNotEmpty) {
+      if (tempNode.title.contains(RegExp(val, caseSensitive: false)) ||
+          tempNode.children.isNotEmpty) {
         tempNodes.add(tempNode);
       }
     }
@@ -173,7 +174,7 @@ class _FlutterTreeviewPlusState extends State<FlutterTreeviewPlus> {
                     ),
                   ...List.generate(
                     _renderList.length,
-                        (int index) {
+                    (int index) {
                       return TreeNode(
                         load: load,
                         remove: remove,

@@ -11,7 +11,8 @@ class TreeviewBloc extends Bloc<TreeviewEvent, TreeviewState> {
     on<UpdateTreeviewEvent>(_onUpdateTreeviewEvent);
   }
 
-  FutureOr<void> _onUpdateTreeviewEvent(UpdateTreeviewEvent event, Emitter<TreeviewState> emit) {
+  FutureOr<void> _onUpdateTreeviewEvent(
+      UpdateTreeviewEvent event, Emitter<TreeviewState> emit) {
     emit(UpdatedTreeviewState());
   }
 }
