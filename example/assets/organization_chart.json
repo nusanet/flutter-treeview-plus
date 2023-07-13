@@ -30,8 +30,7 @@
       "id": 2,
       "pid": 0,
       "name": "testName2",
-      "children": [
-      ]
+      "children": []
     },
     {
       "id": 3,
@@ -105,6 +104,38 @@
               "id": 321,
               "pid": 32,
               "name": "testName321",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "pid": 0,
+      "name": "testName4",
+      "children": [
+        {
+          "id": 41,
+          "pid": 4,
+          "name": "testName41",
+          "children": [
+            {
+              "id": 411,
+              "pid": 41,
+              "name": "testName411",
+              "children": []
+            },
+            {
+              "id": 412,
+              "pid": 41,
+              "name": "testName412",
+              "children": []
+            },
+            {
+              "id": 413,
+              "pid": 41,
+              "name": "testName413",
               "children": []
             }
           ]
