@@ -1,3 +1,7 @@
+## 1.2.1
+
+* Fixed parent state should indeterminate while have one child state indeterminate.
+
 ## 1.2.0
 
 * Added onTap listener to expand/collapse to the label.
