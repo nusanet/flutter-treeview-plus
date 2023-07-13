@@ -286,18 +286,17 @@ class _TreeNodeState extends State<TreeNode> with SingleTickerProviderStateMixin
       bool? isParentChecked;
       var counterFalse = 0;
       var counterTrue = 0;
-      var counterNull = 0;
       for (final child in parent.children) {
         final isChecked = child.checked;
         if (isChecked == null) {
-          counterNull += 1;
+          /* Nothing to do in here */
         } else if (isChecked) {
           counterTrue += 1;
         } else {
           counterFalse += 1;
         }
       }
-      if (counterTrue == lenChildren || counterNull == lenChildren) {
+      if (counterTrue == lenChildren) {
         isParentChecked = true;
       } else if (counterFalse == lenChildren) {
         isParentChecked = false;
